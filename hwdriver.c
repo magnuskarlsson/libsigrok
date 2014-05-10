@@ -183,6 +183,9 @@ extern SR_PRIV struct sr_dev_driver norma_dmm_driver_info;
 #ifdef HAVE_HW_OLS
 extern SR_PRIV struct sr_dev_driver ols_driver_info;
 #endif
+#ifdef HAVE_HW_PIPISTRELLO_OLS
+extern SR_PRIV struct sr_dev_driver p_ols_driver_info;
+#endif
 #ifdef HAVE_HW_RIGOL_DS
 extern SR_PRIV struct sr_dev_driver rigol_ds_driver_info;
 #endif
@@ -337,6 +340,9 @@ static struct sr_dev_driver *drivers_list[] = {
 #endif
 #ifdef HAVE_HW_OLS
 	&ols_driver_info,
+#endif
+#ifdef HAVE_HW_PIPISTRELLO_OLS
+	&p_ols_driver_info,
 #endif
 #ifdef HAVE_HW_RIGOL_DS
 	&rigol_ds_driver_info,

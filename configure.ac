@@ -205,6 +205,11 @@ AC_ARG_ENABLE(ols, AC_HELP_STRING([--enable-ols],
 	[HW_OLS="$enableval"],
 	[HW_OLS=$HW_ENABLED_DEFAULT])
 
+AC_ARG_ENABLE(pipistrello-ols, AC_HELP_STRING([--enable-pipstrello-ols],
+	[enable Pipistrello OLS support [default=yes]]),
+	[HW_PIPISTRELLO_OLS="$enableval"],
+	[HW_PIPISTRELLO_OLS=$HW_ENABLED_DEFAULT])
+
 AC_ARG_ENABLE(rigol-ds, AC_HELP_STRING([--enable-rigol-ds],
 	[enable Rigol DS support [default=yes]]),
 	[HW_RIGOL_DS="$enableval"],
@@ -370,7 +375,8 @@ PKG_CHECK_MODULES([libftdi], [libftdi >= 0.16],
 	[LIB_CFLAGS="$LIB_CFLAGS $libftdi_CFLAGS";
 	LIBS="$LIBS $libftdi_LIBS";
 	SR_PKGLIBS="$SR_PKGLIBS libftdi"],
-	[HW_ASIX_SIGMA="no"; HW_CHRONOVU_LA="no"; HW_IKALOGIC_SCANAPLUS="no"])
+	[HW_ASIX_SIGMA="no"; HW_CHRONOVU_LA="no"; 
+	HW_IKALOGIC_SCANAPLUS="no"; HW_PIPISTRELLO_OLS="no"])
 
 # The Check unit testing framework is optional. Disable if not found.
 PKG_CHECK_MODULES([check], [check >= 0.9.4],
@@ -512,6 +518,11 @@ if test "x$HW_OLS" = "xyes"; then
 	AC_DEFINE(HAVE_HW_OLS, 1, [OpenBench Logic Sniffer (OLS) support])
 fi
 
+AM_CONDITIONAL(HW_PIPISTRELLO_OLS, test x$HW_PIPISTRELLO_OLS = xyes)
+if test "x$HW_PIPISTRELLO_OLS" = "xyes"; then
+	AC_DEFINE(HAVE_HW_PIPISTRELLO_OLS, 1, [Pipistrello OLS support])
+fi
+
 AM_CONDITIONAL(HW_RIGOL_DS, test x$HW_RIGOL_DS = xyes)
 if test "x$HW_RIGOL_DS" = "xyes"; then
 	AC_DEFINE(HAVE_HW_RIGOL_DS, 1, [Rigol DS support])
@@ -637,6 +648,7 @@ echo "  - lascar-el-usb................... $HW_LASCAR_EL_USB"
 echo "  - mic-985xx....................... $HW_MIC_985XX"
 echo "  - norma-dmm....................... $HW_NORMA_DMM"
 echo "  - openbench-logic-sniffer......... $HW_OLS"
+echo "  - pipistrello-ols................. $HW_PIPISTRELLO_OLS"
 echo "  - rigol-ds........................ $HW_RIGOL_DS"
 echo "  - saleae-logic16.................. $HW_SALEAE_LOGIC16"
 echo "  - serial-dmm...................... $HW_SERIAL_DMM"
