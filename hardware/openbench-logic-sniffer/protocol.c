@@ -402,7 +402,7 @@ SR_PRIV int ols_receive_data(int fd, int revents, void *cb_data)
 					return TRUE;
 				}
 				devc->num_samples += (devc->rle_count + 1) * 2;
-				if (devc->num_samples > devc->limit_samples) {
+				if (devc->num_samples >= devc->limit_samples) {
 					/* Save us from overrunning the buffer. */
 					devc->rle_count -= (devc->num_samples - devc->limit_samples) / 2;
 					devc->num_samples = devc->limit_samples;
@@ -495,7 +495,7 @@ SR_PRIV int ols_receive_data(int fd, int revents, void *cb_data)
 					}
 				}
 				devc->num_samples += devc->rle_count + 1;
-				if (devc->num_samples > devc->limit_samples) {
+				if (devc->num_samples >= devc->limit_samples) {
 					/* Save us from overrunning the buffer. */
 					devc->rle_count -= devc->num_samples - devc->limit_samples;
 					devc->num_samples = devc->limit_samples;
